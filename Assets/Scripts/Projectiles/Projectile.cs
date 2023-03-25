@@ -53,7 +53,7 @@ namespace Projectile
 
 				if (isGravityOn)
 				{
-					float angle = Mathf.Atan2(rb.velocity.x, rb.velocity.y) * Mathf.Rad2Deg;
+					float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
 					transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);	
 				}
 			}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Player Detected State", fileName = "NewPlayerDetectedStateData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Player Detected State", fileName = "NewPlayerDetectedStateData")]
 	public class SO_PlayerDetectedState : ScriptableObject
 	{
 		public float longRangeActionTime = 1.5f;

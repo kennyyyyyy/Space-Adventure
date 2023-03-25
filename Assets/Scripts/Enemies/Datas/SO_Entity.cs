@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/Entity Data/Base Data", fileName = "NewEntityData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/Entity Data/Base Data", fileName = "NewEntityData")]
 	public class SO_Entity : ScriptableObject
 	{
 		public float maxHealth = 30f;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Charge State", fileName = "NewChargeData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Charge State", fileName = "NewChargeData")]
 	public class SO_ChargeState : ScriptableObject
 	{
 		public float chargeSpeed = 6f;

@@ -53,7 +53,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5085885269117525763
 Transform:
   m_ObjectHideFlags: 0
@@ -256,6 +256,7 @@ MonoBehaviour:
   attack1CheckLayer:
     serializedVersion: 2
     m_Bits: 1024
+  stunDamageAmount: 1
 --- !u!114 &1788232837
 MonoBehaviour:
   m_ObjectHideFlags: 0

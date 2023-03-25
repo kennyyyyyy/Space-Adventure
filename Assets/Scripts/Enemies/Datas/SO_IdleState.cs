@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Idle State", fileName = "NewIdleState")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Idle State", fileName = "NewIdleState")]
 	public class SO_IdleState : ScriptableObject
 	{
 		public float minIdleTime = 1f;

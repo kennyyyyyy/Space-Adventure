@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Dodge State", fileName = "NewDodgeData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Dodge State", fileName = "NewDodgeData")]
 	public class SO_DodgeState : ScriptableObject
 	{
 		[Tooltip("闪避速度")]

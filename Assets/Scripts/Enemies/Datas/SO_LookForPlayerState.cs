@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Look For Player State", fileName = "NewLookForPlayerStateData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Look For Player State", fileName = "NewLookForPlayerStateData")]
 	public class SO_LookForPlayerState : ScriptableObject
 	{
 		public int amountOfTurns = 2;

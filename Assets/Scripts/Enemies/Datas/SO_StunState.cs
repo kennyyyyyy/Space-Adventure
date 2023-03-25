@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Stun State", fileName = "NewStunData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Stun State", fileName = "NewStunData")]
 	public class SO_StunState : ScriptableObject
 	{
 		public float stunTime = 3f;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Ranged Attack State", fileName = "NewRangedAttackData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Ranged Attack State", fileName = "NewRangedAttackData")]
 	public class SO_RangedAttackState : ScriptableObject
 	{
 		[Tooltip("箭预制体")]

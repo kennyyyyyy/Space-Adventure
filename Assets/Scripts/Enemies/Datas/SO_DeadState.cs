@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Dead State", fileName = "NewDeadData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Dead State", fileName = "NewDeadData")]
 	public class SO_DeadState : ScriptableObject
 	{
 		public GameObject deathChunkParticle;

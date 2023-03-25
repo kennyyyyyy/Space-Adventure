@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemy.Data
 {
-	[CreateAssetMenu(menuName = "Data/State Data/Melee Attack State", fileName = "NewMeleeAttackData")]
+	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Melee Attack State", fileName = "NewMeleeAttackData")]
 	public class SO_MeleeAttackState : ScriptableObject
 	{
 		public float attackRadius = 0.5f;
