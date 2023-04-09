@@ -1,6 +1,6 @@
-using Enemy.Data;
-using Enemy.StateMachine;
-using Enemy.States;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
+using SA.Enemy.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Enemy.Specific.Enemy2
+namespace SA.Enemy.Specific.Enemy2
 {
 	public class Enemy2_RangedAttackState : RangedAttackState
 	{

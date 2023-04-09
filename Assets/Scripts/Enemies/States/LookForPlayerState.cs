@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class LookForPlayerState : State
 	{
@@ -40,7 +40,7 @@ namespace Enemy.States
 			lastTurnTime = startTime;
 			amountOfTurnsDone = 0;
 
-			entity.SetVelocity(0);
+			core.Movement.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -52,10 +52,12 @@ namespace Enemy.States
 		{
 			base.LogicUpdate();
 
+			core.Movement.SetVelocityX(0);
+
 			//立即转向
-			if(turnImmediately)	
+			if (turnImmediately)	
 			{
-				entity.Flip();
+				core.Movement.Flip();
 				lastTurnTime = Time.time;
 				amountOfTurnsDone++;
 				turnImmediately = false;
@@ -63,7 +65,7 @@ namespace Enemy.States
 			//转向时间到了，且还有转向没完成
 			else if(Time.time >= lastTurnTime + stateData.timeBetweenTurns && !isAllTurnsDone)
 			{
-				entity.Flip();
+				core.Movement.Flip();
 				lastTurnTime = Time.time;
 				amountOfTurnsDone++;
 			}

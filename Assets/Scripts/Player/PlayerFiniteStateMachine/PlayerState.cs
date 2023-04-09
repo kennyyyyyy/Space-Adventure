@@ -1,19 +1,16 @@
-using Enemy.StateMachine;
-using MPlayer.Data;
+using SA.Enemy.StateMachine;
+using SA.MEntity;
+using SA.MPlayer.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
-using UnityEngine.UI;
 
-namespace MPlayer.StateMachine
+namespace SA.MPlayer.StateMachine
 {
 	public class PlayerState
 	{
+		protected Core core;
+
 		protected Player player;
 		protected PlayerStateMachine stateMachine;
 		protected PlayerData playerData;
@@ -31,6 +28,7 @@ namespace MPlayer.StateMachine
 			this.stateMachine = stateMachine;
 			this.playerData = playerData;
 			this.animBoolName = animBoolName;
+			core = player.Core;
 		}
 
 		/// <summary>

@@ -1,8 +1,8 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerWallClimbState : PlayerTouchingWallState
 	{
@@ -16,7 +16,7 @@ namespace MPlayer.PlayerStates.SubStates
 
 			if(!isExitingState)
 			{
-				player.SetVelocityY(playerData.wallClimbVelocity);
+				core.Movement.SetVelocityY(playerData.wallClimbVelocity);
 
 				if (!isExitingState && yInput <= 0)
 				{

@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class IdleState : State
 	{
@@ -26,7 +26,7 @@ namespace Enemy.States
 		{
 			base.Enter();
 
-			entity.SetVelocity(0);
+			core.Movement.SetVelocityX(0);
 			isIdleTimeOver = false;
 
 			SetRandomIdleTime();
@@ -38,7 +38,7 @@ namespace Enemy.States
 
 			if(flipAfterIdle)
 			{
-				entity.Flip();
+				core.Movement.Flip();
 			}
 		}
 
@@ -46,7 +46,9 @@ namespace Enemy.States
 		{
 			base.LogicUpdate();
 
-			if(Time.time >= startTime + idleTime)
+			core.Movement.SetVelocityX(0);
+
+			if (Time.time >= startTime + idleTime)
 			{
 				isIdleTimeOver = true;
 			}

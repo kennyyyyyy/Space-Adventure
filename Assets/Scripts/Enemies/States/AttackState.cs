@@ -1,9 +1,9 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	/// <summary>
 	/// 基础攻击类，细分为远程和近战状态
@@ -33,7 +33,7 @@ namespace Enemy.States
 
 			entity.atsm.attackState = this;
 			isAnimationFinished = false;
-			entity.SetVelocity(0);
+			core.Movement.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -44,6 +44,7 @@ namespace Enemy.States
 		public override void LogicUpdate()
 		{
 			base.LogicUpdate();
+			core.Movement.SetVelocityX(0);
 		}
 
 		public override void PhysicsUpdate()

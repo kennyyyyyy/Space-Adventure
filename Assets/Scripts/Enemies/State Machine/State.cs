@@ -1,8 +1,9 @@
+using SA.MEntity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.StateMachine
+namespace SA.Enemy.StateMachine
 {
 	public class State
 	{
@@ -10,6 +11,7 @@ namespace Enemy.StateMachine
 
 		protected FiniteStateMachine stateMachine;  //所属状态机
 		protected Entity entity;                    //所属实体
+		protected Core core;
 
 		protected string animBoolName;              //动画状态机中的对应变量
 
@@ -18,6 +20,7 @@ namespace Enemy.StateMachine
 			this.stateMachine = stateMachine;
 			this.entity = entity;
 			this.animBoolName = animBoolName;
+			core = entity.Core;
 		}
 
 		/// <summary>

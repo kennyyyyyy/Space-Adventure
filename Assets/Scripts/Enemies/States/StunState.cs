@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class StunState : State
 	{
@@ -25,7 +25,7 @@ namespace Enemy.States
 		{
 			base.DoChecks();
 
-			isGrounded = entity.CheckGround();
+			isGrounded = core.CollisionSenses.Ground;
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 		}
@@ -36,7 +36,7 @@ namespace Enemy.States
 
 			isStunTimeOver = false;
 			isMovementStopped = false;
-			entity.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
+			core.Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
 
 		}
 
@@ -59,7 +59,7 @@ namespace Enemy.States
 			if (isGrounded && Time.time >= startTime + stateData.stunKnockbackTime && !isMovementStopped)
 			{
 				isMovementStopped = true;
-				entity.SetVelocity(0f);
+				core.Movement.SetVelocityX(0f);
 			}
 		}
 

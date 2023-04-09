@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class ChargeState : State
 	{
@@ -25,7 +25,7 @@ namespace Enemy.States
 		{
 			base.Enter();
 			isChargeTimeOver = false;
-			entity.SetVelocity(stateData.chargeSpeed);
+			core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
 		}
 
 		public override void Exit()
@@ -37,7 +37,9 @@ namespace Enemy.States
 		{
 			base.LogicUpdate();
 
-			if(Time.time >= startTime + stateData.chargeTime)
+			core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+
+			if (Time.time >= startTime + stateData.chargeTime)
 			{
 				isChargeTimeOver = true;
 			}
@@ -54,8 +56,8 @@ namespace Enemy.States
 			base.DoChecks();
 
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
-			isDetectingLedge = entity.CheckLedge();
-			isDetectingWall = entity.CheckWall();
+			isDetectingLedge = core.CollisionSenses.LedgeVertical;
+			isDetectingWall = core.CollisionSenses.WallFront;
 
 			performClosetRangeAction = entity.CheckPlayerInCloseRangeAction();
 		}

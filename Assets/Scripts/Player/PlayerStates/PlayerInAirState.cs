@@ -1,27 +1,31 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.OtherStates
+namespace SA.MPlayer.PlayerStates.OtherStates
 {
 	public class PlayerInAirState : PlayerState
 	{
+		//input
 		private int xInput;
+		private bool jumpInput;
+		private bool jumpInputStop;
+		private bool dashInput;
+		private bool grabInput;
 
+		//check
 		private bool isGrounded;
 		private bool isTouchingWall;
 		private bool isTouchingWallBack;
 		private bool oldIsTouchingWall;
 		private bool oldIsTouchingWallBack;
-		private bool coyoteTime;        //当角色抛出边缘的一段时间内，跳跃次数不减少
-		private bool wallJumpCoyoteTime;
-		private bool jumpInput;
-		private bool jumpInputStop;
-		private bool isJumping;
-		private bool grabInput;
 		private bool isTouchingLedge;
 
+		private bool isJumping;
+		//
+		private bool coyoteTime;        //当角色抛出边缘的一段时间内，跳跃次数不减少
+		private bool wallJumpCoyoteTime;
 
 		private float startWallJumpCoyoteTime;
 
@@ -36,10 +40,10 @@ namespace MPlayer.PlayerStates.OtherStates
 			oldIsTouchingWall = isTouchingWall;
 			oldIsTouchingWallBack = isTouchingWallBack;
 
-			isGrounded = player.CheckIfGrounded();
-			isTouchingWall = player.CheckIfTouchingWall();
-			isTouchingWallBack = player.CheckIfTouchingWallBack();
-			isTouchingLedge = player.CheckIfTouchingLedge();
+			isGrounded = core.CollisionSenses.Ground;
+			isTouchingWall = core.CollisionSenses.WallFront;
+			isTouchingWallBack = core.CollisionSenses.WallBack;
+			isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
 
 			if (isTouchingWall && !isTouchingLedge)
 			{
@@ -78,14 +82,22 @@ namespace MPlayer.PlayerStates.OtherStates
 			jumpInput = player.InputHandler.JumpInput;
 			jumpInputStop = player.InputHandler.JumpInputStop;
 			grabInput = player.InputHandler.GrabInput;
+			dashInput = player.InputHandler.DashInput;
 
 			CheckJumpMultiplier();
-
-			if (isGrounded && player.CurrentVelocity.y < 0.02f)
+			if (player.InputHandler.AttackInputs[(int)CombatInputs.primary])
+			{
+				stateMachine.ChangeState(player.PrimaryAttackState);
+			}
+			else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary])
+			{
+				stateMachine.ChangeState(player.SecondaryAttackState);
+			}
+			else if (isGrounded && core.Movement.CurrentVelocity.y < 0.02f)
 			{
 				stateMachine.ChangeState(player.LandState);
 			}
-			else if(isTouchingWall && !isTouchingLedge)
+			else if(isTouchingWall && !isTouchingLedge && !isGrounded)
 			{
 				stateMachine.ChangeState(player.LedgeClimbState);
 			}
@@ -94,7 +106,7 @@ namespace MPlayer.PlayerStates.OtherStates
 			{
 				StopWallJumpCoyoteTime();
 
-				isTouchingWall = player.CheckIfTouchingWall();
+				isTouchingWall = core.CollisionSenses.WallFront;
 				player.WallJumpState.DetermineWallJUmpDirection(isTouchingWall);
 				stateMachine.ChangeState(player.WallJumpState);
 			}
@@ -103,21 +115,25 @@ namespace MPlayer.PlayerStates.OtherStates
 			{
 				stateMachine.ChangeState(player.JumpState);
 			}
-			else if(isTouchingWall && grabInput)
+			else if(isTouchingWall && grabInput && isTouchingLedge)
 			{
 				stateMachine.ChangeState(player.WallGrabState);
 			}
-			else if(isTouchingWall && xInput == player.FacingDirention && player.CurrentVelocity.y <= 0)
+			else if(isTouchingWall && xInput == core.Movement.FacingDirection && core.Movement.CurrentVelocity.y <= 0)
 			{
 				stateMachine.ChangeState(player.WallSlideState);
 			}
+			else if(dashInput && player.DashState.CheckIfCanDash())
+			{
+				stateMachine.ChangeState(player.DashState);
+			}
 			else
 			{
-				player.CheckIfShoudlFlip(xInput);
-				player.SetVelocityX(playerData.movementVelocity * xInput);
+				core.Movement.CheckIfShoudlFlip(xInput);
+				core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
-				player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
-				player.Anim.SetFloat("xVelocity", Mathf.Abs(player.CurrentVelocity.x));
+				player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
+				player.Anim.SetFloat("xVelocity", Mathf.Abs(core.Movement.CurrentVelocity.x));
 			}
 		}
 
@@ -135,10 +151,10 @@ namespace MPlayer.PlayerStates.OtherStates
 			{
 				if (jumpInputStop)
 				{
-					player.SetVelocityY(player.CurrentVelocity.y * playerData.jumpHeightMultiplier);
+					core.Movement.SetVelocityY(core.Movement.CurrentVelocity.y * playerData.jumpHeightMultiplier);
 					isJumping = false;
 				}
-				else if (player.CurrentVelocity.y <= 0)
+				else if (core.Movement.CurrentVelocity.y <= 0)
 				{
 					isJumping = false;
 				}

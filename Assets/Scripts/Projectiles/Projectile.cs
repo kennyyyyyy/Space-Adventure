@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
 
-namespace Projectile
+namespace SA.Projectiles
 {
 	public class Projectile : MonoBehaviour
 	{
-		private AttackDetails attackDetails;
+		//private AttackDetails attackDetails;
 		private Rigidbody2D rb;
 
 		private float speed;
@@ -49,7 +49,7 @@ namespace Projectile
 		{
 			if (!hasHitGround)
 			{
-				attackDetails.position = transform.position;
+				//attackDetails.position = transform.position;
 
 				if (isGravityOn)
 				{
@@ -68,7 +68,7 @@ namespace Projectile
 
 				if (damageHit)
 				{
-					damageHit.transform.SendMessage("Damage", attackDetails);
+					//damageHit.transform.SendMessage("Damage", attackDetails);
 					//TODO:对象池
 					Destroy(gameObject);
 				}
@@ -92,7 +92,7 @@ namespace Projectile
 		{
 			this.speed = speed;
 			this.travelDistance = travelDistance;
-			attackDetails.damageAmount = damage;
+			//attackDetails.damageAmount = damage;
 
 		}
 

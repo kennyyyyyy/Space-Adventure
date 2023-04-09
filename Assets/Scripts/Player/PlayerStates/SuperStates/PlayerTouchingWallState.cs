@@ -1,8 +1,8 @@
-using MPlayer.Data;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.StateMachine;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SuperStates
+namespace SA.MPlayer.PlayerStates.SuperStates
 {
 	public class PlayerTouchingWallState : PlayerState
 	{
@@ -33,9 +33,9 @@ namespace MPlayer.PlayerStates.SuperStates
 		{
 			base.DoChecks();
 
-			isGrounded = player.CheckIfGrounded();
-			isTouchingWall = player.CheckIfTouchingWall();
-			isTouchingLedge = player.CheckIfTouchingLedge();
+			isGrounded = core.CollisionSenses.Ground;
+			isTouchingWall = core.CollisionSenses.WallFront;
+			isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
 
 			if(isTouchingWall && !isTouchingLedge)
 			{
@@ -71,7 +71,7 @@ namespace MPlayer.PlayerStates.SuperStates
 			{
 				stateMachine.ChangeState(player.IdleState);
 			}
-			else if (!isTouchingWall || (xInput != player.FacingDirention) && !grabInput)
+			else if (!isTouchingWall || (xInput != core.Movement.FacingDirection) && !grabInput)
 			{
 				stateMachine.ChangeState(player.InAirState);
 			}

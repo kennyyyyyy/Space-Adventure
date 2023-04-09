@@ -1,11 +1,11 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerMoveState : PlayerGroundedState
 	{
@@ -32,13 +32,20 @@ namespace MPlayer.PlayerStates.SubStates
 		{
 			base.LogicUpdate();
 
-			player.CheckIfShoudlFlip(xInput);
+			core.Movement.CheckIfShoudlFlip(xInput);
 
-			player.SetVelocityX(playerData.movementVelocity * xInput);
+			core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
-			if (xInput == 0f && !isExitingState)
+			if (!isExitingState)
 			{
-				stateMachine.ChangeState(player.IdleState);
+				if (xInput == 0f)
+				{
+					stateMachine.ChangeState(player.IdleState);
+				}
+				else if (yInput < 0)
+				{
+					stateMachine.ChangeState(player.CrounchIdleState);
+				}
 			}
 		}
 

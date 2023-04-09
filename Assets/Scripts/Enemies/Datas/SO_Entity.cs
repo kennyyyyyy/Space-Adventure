@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.Data
+namespace SA.Enemy.Data
 {
 	[CreateAssetMenu(menuName = "Data/Enemy Data/Entity Data/Base Data", fileName = "NewEntityData")]
 	public class SO_Entity : ScriptableObject

@@ -52,36 +52,36 @@ public class CombatDummyController : MonoBehaviour
 		CheckKnockback(); 
 	}
 
-	private void Damage(AttackDetails attackDetails)
-	{
-		curhealth -= attackDetails.damageAmount;
-		playerFacingDirection = attackDetails.position.x < transform.position.x ? 1 : -1;
+	//private void Damage(AttackDetails attackDetails)
+	//{
+	//	curhealth -= attackDetails.damageAmount;
+	//	playerFacingDirection = attackDetails.position.x < transform.position.x ? 1 : -1;
 
-		Instantiate(hitParticle, aliveGO.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+	//	Instantiate(hitParticle, aliveGO.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
-		if(playerFacingDirection == 1)
-		{
-			playerOnLeft = true;
-		}
-		else
-		{
-			playerOnLeft = false;
-		}
-		aliveAnim.SetBool("playerOnLeft", playerOnLeft);
-		aliveAnim.SetTrigger("damage");
+	//	if(playerFacingDirection == 1)
+	//	{
+	//		playerOnLeft = true;
+	//	}
+	//	else
+	//	{
+	//		playerOnLeft = false;
+	//	}
+	//	aliveAnim.SetBool("playerOnLeft", playerOnLeft);
+	//	aliveAnim.SetTrigger("damage");
 
-		if(applyKnockback && curhealth > 0.0f)
-		{
-			//knockback
-			Knockback();
-		}
+	//	if(applyKnockback && curhealth > 0.0f)
+	//	{
+	//		//knockback
+	//		Knockback();
+	//	}
 
-		if(curhealth <= 0.0f)
-		{
-			//die
-			Die();
-		}
-	}
+	//	if(curhealth <= 0.0f)
+	//	{
+	//		//die
+	//		Die();
+	//	}
+	//}
 
 	/// <summary>
 	/// 击退效果开始

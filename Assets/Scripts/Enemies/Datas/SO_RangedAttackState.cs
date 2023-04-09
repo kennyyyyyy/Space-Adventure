@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemy.Data
+namespace SA.Enemy.Data
 {
 	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Ranged Attack State", fileName = "NewRangedAttackData")]
 	public class SO_RangedAttackState : ScriptableObject

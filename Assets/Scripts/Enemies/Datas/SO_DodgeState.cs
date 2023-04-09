@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.Data
+namespace SA.Enemy.Data
 {
 	[CreateAssetMenu(menuName = "Data/Enemy Data/State Data/Dodge State", fileName = "NewDodgeData")]
 	public class SO_DodgeState : ScriptableObject

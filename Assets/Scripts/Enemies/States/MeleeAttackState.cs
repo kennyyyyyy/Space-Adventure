@@ -1,10 +1,11 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
+using SA.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	/// <summary>
 	/// 近战攻击
@@ -12,8 +13,6 @@ namespace Enemy.States
 	public class MeleeAttackState : AttackState
 	{
 		protected SO_MeleeAttackState stateData;
-
-		protected AttackDetails attackDetails;
 
 		public MeleeAttackState(FiniteStateMachine stateMachine, Entity entity, string animBoolName, Transform attackPosition, SO_MeleeAttackState stateData) : base(stateMachine, entity, animBoolName, attackPosition)
 		{
@@ -28,9 +27,6 @@ namespace Enemy.States
 		public override void Enter()
 		{
 			base.Enter();
-
-			attackDetails.damageAmount = stateData.attackDamage;
-			attackDetails.position = entity.aliveGO.transform.position;
 		}
 
 		public override void Exit()
@@ -58,10 +54,23 @@ namespace Enemy.States
 			base.TriggerAttack();
 
 			Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlyaer);
-			
+			IDamageable damageable;
+			IKnockbackable knockbackable;
 			foreach (Collider2D coll in detectedObjects)
 			{
-				coll.transform.SendMessage("Damage", attackDetails);
+				damageable = coll.GetComponent<IDamageable>();
+
+				if (damageable != null)
+				{
+					damageable.Damage(stateData.attackDamage);
+				}
+
+				knockbackable = coll.GetComponent<IKnockbackable>();
+
+				if (knockbackable != null)
+				{
+					knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, core.Movement.FacingDirection);
+				}
 			}
 		}
 

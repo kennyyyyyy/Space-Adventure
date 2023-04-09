@@ -1,11 +1,11 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Enemy.Specific.Enemy2
+namespace SA.Enemy.Specific.Enemy2
 {
 	public class Enemy2 : Entity
 	{
@@ -44,9 +44,9 @@ namespace Enemy.Specific.Enemy2
 		[SerializeField]
 		private Transform rangedAttackPosition;
 
-		public override void Start()
+		public override void Awake()
 		{
-			base.Start();
+			base.Awake();
 
 			moveState = new Enemy2_MoveState(stateMachine, this, "move", moveStateData, this);
 			idleState = new Enemy2_IdleState(stateMachine, this, "idle", idleStateData, this);
@@ -58,31 +58,35 @@ namespace Enemy.Specific.Enemy2
 			dodgeState = new Enemy2_DodgeState(stateMachine, this, "dodge", dodgeStateData, this);
 			rangedAttackState = new Enemy2_RangedAttackState(stateMachine, this, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
+		}
+
+		private void Start()
+		{
 			stateMachine.Initialize(moveState);
 		}
 
-		public override void Damage(AttackDetails attackDetails)
-		{
-			base.Damage(attackDetails);
+		//public override void Damage(AttackDetails attackDetails)
+		//{
+		//	base.Damage(attackDetails);
 
-			if(isDead)
-			{
-				stateMachine.ChangeState(deadState);
-			}
-			else if(isStunned && stateMachine.currentState != stunState)
-			{
-				stateMachine.ChangeState(stunState);
-			}
-			else if(CheckPlayerInMinAgroRange())
-			{
-				stateMachine.ChangeState(rangedAttackState);
-			}
-			else if(!CheckPlayerInMinAgroRange())
-			{
-				lookForPlayerState.SetTurnImmediately(true);
-				stateMachine.ChangeState(lookForPlayerState);
-			}
-		}
+		//	if(isDead)
+		//	{
+		//		stateMachine.ChangeState(deadState);
+		//	}
+		//	else if(isStunned && stateMachine.currentState != stunState)
+		//	{
+		//		stateMachine.ChangeState(stunState);
+		//	}
+		//	else if(CheckPlayerInMinAgroRange())
+		//	{
+		//		stateMachine.ChangeState(rangedAttackState);
+		//	}
+		//	else if(!CheckPlayerInMinAgroRange())
+		//	{
+		//		lookForPlayerState.SetTurnImmediately(true);
+		//		stateMachine.ChangeState(lookForPlayerState);
+		//	}
+		//}
 
 		public override void OnDrawGizmos()
 		{

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.StateMachine
+namespace SA.Enemy.StateMachine
 {
 	public class FiniteStateMachine
 	{

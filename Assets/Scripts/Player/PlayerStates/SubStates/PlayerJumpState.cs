@@ -1,11 +1,11 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerJumpState : PlayerAbilityState
 	{
@@ -22,8 +22,8 @@ namespace MPlayer.PlayerStates.SubStates
 
 			player.InAirState.StopCoyoteTime();
 
-			player.InputHandler.UserJumpInput();
-			player.SetVelocityY(playerData.jumpVelocity);
+			player.InputHandler.UseJumpInput();
+			core.Movement.SetVelocityY(playerData.jumpVelocity);
 			isAbilityDone = true;
 			DecreaseAmountOfJumpsLeft();
 			player.InAirState.SetIsJumping();

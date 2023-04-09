@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.Specific.Enemy1
+namespace SA.Enemy.Specific.Enemy1
 {
 	public class Enemy1 : Entity
 	{
@@ -37,9 +37,9 @@ namespace Enemy.Specific.Enemy1
 		[SerializeField]
 		private Transform meleeAttackPosition;
 
-		public override void Start()
+		public override void Awake()
 		{
-			base.Start();
+			base.Awake();
 			
 			moveState = new Enemy1_MoveState(stateMachine, this, "move", moveStateDate, this);
 			idleState = new Enemy1_IdleState(stateMachine, this, "idle", idleStateDate, this);
@@ -50,6 +50,10 @@ namespace Enemy.Specific.Enemy1
 			stunState = new Enemy1_StunState(stateMachine, this, "stun", stunStateData, this);
 			deadState = new Enemy1_DeadState(stateMachine, this, "dead", deadStateData, this);
 
+		}
+
+		private void Start()
+		{
 			stateMachine.Initialize(moveState);
 		}
 
@@ -60,24 +64,24 @@ namespace Enemy.Specific.Enemy1
 			Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
 		}
 
-		public override void Damage(AttackDetails attackDetails)
-		{
-			base.Damage(attackDetails);
+		//public override void Damage(AttackDetails attackDetails)
+		//{
+		//	base.Damage(attackDetails);
 
 
-			if (isDead)
-			{
-				stateMachine.ChangeState(deadState);
-			}
-			else if (isStunned && stateMachine.currentState != stunState)
-			{
-				stateMachine.ChangeState(stunState);
-			}
-			else
-			{
-				stateMachine.ChangeState(lookForPlayerState);
-			}
+		//	if (isDead)
+		//	{
+		//		stateMachine.ChangeState(deadState);
+		//	}
+		//	else if (isStunned && stateMachine.currentState != stunState)
+		//	{
+		//		stateMachine.ChangeState(stunState);
+		//	}
+		//	else
+		//	{
+		//		stateMachine.ChangeState(lookForPlayerState);
+		//	}
 
-		}
+		//}
 	}  
 }

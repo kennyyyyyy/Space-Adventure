@@ -1,11 +1,11 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerWallGrabState : PlayerTouchingWallState
 	{
@@ -66,8 +66,8 @@ namespace MPlayer.PlayerStates.SubStates
 		{
 			player.transform.position = holdPosition;
 
-			player.SetVelocityX(0);
-			player.SetVelocityY(0);
+			core.Movement.SetVelocityX(0);
+			core.Movement.SetVelocityY(0);
 		}
 
 

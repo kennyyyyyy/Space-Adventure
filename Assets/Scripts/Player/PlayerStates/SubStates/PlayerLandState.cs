@@ -1,11 +1,11 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerLandState : PlayerGroundedState
 	{

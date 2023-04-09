@@ -1,5 +1,5 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class DodgeState : State
 	{
@@ -29,7 +29,7 @@ namespace Enemy.States
 
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
 			isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
-			isGrounded = entity.CheckGround();
+			isGrounded = core.CollisionSenses.Ground;
 		}
 
 		public override void Enter()
@@ -38,7 +38,7 @@ namespace Enemy.States
 
 			isDodgeOver = false;
 
-			entity.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -entity.facingDirection);
+			core.Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -core.Movement.FacingDirection);
 		}
 
 		public override void Exit()

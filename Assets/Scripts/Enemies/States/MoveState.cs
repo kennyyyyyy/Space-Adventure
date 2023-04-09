@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class MoveState : State
 	{
@@ -22,7 +22,7 @@ namespace Enemy.States
 		public override void Enter()
 		{
 			base.Enter();
-			entity.SetVelocity(stateData.movementSpeed);
+			core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
 		}
 
 		public override void Exit()
@@ -32,6 +32,7 @@ namespace Enemy.States
 
 		public override void LogicUpdate()
 		{
+			core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
 			base.LogicUpdate();
 		}
 
@@ -44,8 +45,8 @@ namespace Enemy.States
 		{
 			base.DoChecks();
 
-			isDetectingLedge = entity.CheckLedge();
-			isDetectingWall = entity.CheckWall();
+			isDetectingLedge = core.CollisionSenses.LedgeVertical;
+			isDetectingWall = core.CollisionSenses.WallFront;
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 		}
 	}

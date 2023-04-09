@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
-using Enemy.States;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
+using SA.Enemy.States;
 using System;
 
 
-namespace Enemy.Specific.Enemy2
+namespace SA.Enemy.Specific.Enemy2
 {
 	public class Enemy2_StunState : StunState
 	{

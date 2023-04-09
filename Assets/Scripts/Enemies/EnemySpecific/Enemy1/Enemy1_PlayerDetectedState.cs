@@ -1,11 +1,11 @@
-using Enemy.Data;
-using Enemy.StateMachine;
-using Enemy.States;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
+using SA.Enemy.States;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.Specific.Enemy1
+namespace SA.Enemy.Specific.Enemy1
 {
 	public class Enemy1_PlayerDetectedState : PlayerDetectedState
 	{
@@ -44,7 +44,7 @@ namespace Enemy.Specific.Enemy1
 			}
 			else if(!isDetectingLedge)
 			{
-				entity.Flip();
+				core.Movement.Flip();
 				stateMachine.ChangeState(enemy.moveState);
 			}
 		}

@@ -1,6 +1,6 @@
 using System;
 
-namespace MPlayer.StateMachine
+namespace SA.MPlayer.StateMachine
 {
 	public class PlayerStateMachine
 	{

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MPlayer.Data
+namespace SA.MPlayer.Data
 {
 	[CreateAssetMenu(menuName = "Data/Player Data/Player Data", fileName = "NewPlayerData")]
 	public class PlayerData : ScriptableObject
@@ -33,9 +33,24 @@ namespace MPlayer.Data
 		public Vector2 startOffset;
 		public Vector2 stopOffset;
 
-		[Header("Check Variables")]
-		public float groundCheckRadius = 0.3f;
-		public float wallCheckDistance = 0.5f;
-		public LayerMask whatIsGround;
+		[Header("Dash State")]
+		public float dashCooldown = 0.5f;
+		[Tooltip("冲刺的方向选择时间")]public float maxHoldTime = 1f;
+		[Tooltip("冲刺前的时间流逝速度")]public float holdTimeScale = 0.25f;
+		[Tooltip("冲刺时间")]public float dashTime = 0.2f;
+		public float dashVelocity = 30f;
+		[Tooltip("空气阻力")]public float drag = 10f;
+		[Tooltip("冲刺结束后的y轴速度系数，防止冲刺后的速度过快")]public float dashEndYMultiplier = 0.2f;
+		public float distBetweenAfterImages = 0.5f;
+
+		[Header("Crouch State")]
+		public float crouchMovementVelocity = 5f;
+		public float crouchColliderHeight = 0.8f;
+		public float standColliderHeight = 1.6f;
+
+		//[Header("Check Variables")]
+		//public float groundCheckRadius = 0.3f;
+		//public float wallCheckDistance = 0.5f;
+		//public LayerMask whatIsGround;
 	}
 }

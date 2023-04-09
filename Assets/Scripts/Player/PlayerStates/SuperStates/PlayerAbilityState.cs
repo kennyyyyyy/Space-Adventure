@@ -1,8 +1,8 @@
-using MPlayer.Data;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.StateMachine;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SuperStates
+namespace SA.MPlayer.PlayerStates.SuperStates
 {
 	public class PlayerAbilityState : PlayerState
 	{
@@ -18,7 +18,7 @@ namespace MPlayer.PlayerStates.SuperStates
 		{
 			base.DoChecks();
 
-			isGrounded = player.CheckIfGrounded();
+			isGrounded = core.CollisionSenses.Ground;
 		}
 
 		public override void Enter()
@@ -39,7 +39,7 @@ namespace MPlayer.PlayerStates.SuperStates
 
 			if(isAbilityDone)
 			{
-				if(isGrounded && player.CurrentVelocity.y < 0.01f)
+				if(isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
 				{
 					stateMachine.ChangeState(player.IdleState);
 				}

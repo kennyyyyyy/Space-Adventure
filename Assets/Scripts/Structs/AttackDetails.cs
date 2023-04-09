@@ -1,12 +1,14 @@
-using Edgar.GraphBasedGenerator.Grid2D.Drawing;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct AttackDetails
+public struct WeaponAttackDetails
 {
-	public Vector3 position;
+	public string attackName;
+	public float movementSpeed;
 	public float damageAmount;
-	public float stunDamageAmount;
+
+	public float knockbackStrength;
+	public Vector2 knockbackAngle;
 }

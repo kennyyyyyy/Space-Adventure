@@ -1,16 +1,17 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System;
 using UnityEngine;
+using SA.Projectiles;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	public class RangedAttackState : AttackState
 	{
 		protected SO_RangedAttackState stateData;
 
 		protected GameObject projectile;
-		protected Projectile.Projectile projectileScript;
+		protected Projectile projectileScript;
 
 		public RangedAttackState(FiniteStateMachine stateMachine, Entity entity, string animBoolName, Transform attackPosition, SO_RangedAttackState stateData) : base(stateMachine, entity, animBoolName, attackPosition)
 		{
@@ -52,7 +53,7 @@ namespace Enemy.States
 			base.TriggerAttack();
 
 			projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
-			projectileScript = projectile.GetComponent<Projectile.Projectile>();
+			projectileScript = projectile.GetComponent<Projectile>();
 			projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
 		}
 	}

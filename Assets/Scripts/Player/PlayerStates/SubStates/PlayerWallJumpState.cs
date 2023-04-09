@@ -1,9 +1,9 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerWallJumpState : PlayerAbilityState
 	{
@@ -17,19 +17,19 @@ namespace MPlayer.PlayerStates.SubStates
 		public override void Enter()
 		{
 			base.Enter();
-			player.InputHandler.UserJumpInput();
-			player.JumpState.ResetAmountOfJumpsLeft();
-			player.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
-			player.CheckIfShoudlFlip(wallJumpDirection);
-			player.JumpState.DecreaseAmountOfJumpsLeft();
+			player.InputHandler.UseJumpInput();
+			//player.JumpState.ResetAmountOfJumpsLeft();
+			core.Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
+			core.Movement.CheckIfShoudlFlip(wallJumpDirection);
+			//player.JumpState.DecreaseAmountOfJumpsLeft();
 		}
 
 		public override void LogicUpdate()
 		{
 			base.LogicUpdate();
 
-			player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
-			player.Anim.SetFloat("xVelocity", Mathf.Abs(player.CurrentVelocity.x));
+			player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
+			player.Anim.SetFloat("xVelocity", Mathf.Abs(core.Movement.CurrentVelocity.x));
 
 			if (Time.time >= startTime + playerData.wallJumpTime)
 			{
@@ -41,11 +41,11 @@ namespace MPlayer.PlayerStates.SubStates
 		{
 			if (isTouchingWall)
 			{
-				wallJumpDirection = -player.FacingDirention;
+				wallJumpDirection = -core.Movement.FacingDirection;
 			}
 			else
 			{
-				wallJumpDirection = player.FacingDirention;
+				wallJumpDirection = core.Movement.FacingDirection;
 			}
 		}
 	}

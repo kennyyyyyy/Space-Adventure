@@ -1,12 +1,12 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerWallSlideState : PlayerTouchingWallState
 	{
@@ -20,7 +20,7 @@ namespace MPlayer.PlayerStates.SubStates
 
 			if (!isExitingState)
 			{
-				player.SetVelocityY(-playerData.wallSlideVelocity);
+				core.Movement.SetVelocityY(-playerData.wallSlideVelocity);
 
 				if (!isExitingState && grabInput && yInput == 0)
 				{

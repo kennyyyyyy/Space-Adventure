@@ -1,10 +1,10 @@
-using Enemy.Data;
-using Enemy.StateMachine;
+using SA.Enemy.Data;
+using SA.Enemy.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy.States
+namespace SA.Enemy.States
 {
 	/// <summary>
 	/// 两此检测，较远距离和较近距离
@@ -31,7 +31,7 @@ namespace Enemy.States
 			base.Enter();
 
 			performLongRangeAction = false;
-			entity.SetVelocity(0);
+			core.Movement.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -43,7 +43,7 @@ namespace Enemy.States
 		{
 			base.LogicUpdate();
 
-			entity.SetVelocity(0);
+			core.Movement.SetVelocityX(0);
 
 			if(Time.time >= startTime + stateData.longRangeActionTime)
 			{
@@ -63,7 +63,7 @@ namespace Enemy.States
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 			isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
-			isDetectingLedge = entity.CheckLedge();
+			isDetectingLedge = core.CollisionSenses.LedgeVertical;
 		}
 	}
 }

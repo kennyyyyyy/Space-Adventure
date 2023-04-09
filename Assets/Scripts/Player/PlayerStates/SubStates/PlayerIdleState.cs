@@ -1,11 +1,9 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.SuperStates;
-using MPlayer.StateMachine;
-using System.Collections;
-using System.Collections.Generic;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.SuperStates;
+using SA.MPlayer.StateMachine;
 using UnityEngine;
 
-namespace MPlayer.PlayerStates.SubStates
+namespace SA.MPlayer.PlayerStates.SubStates
 {
 	public class PlayerIdleState : PlayerGroundedState
 	{
@@ -22,7 +20,7 @@ namespace MPlayer.PlayerStates.SubStates
 		{
 			base.Enter();
 
-			player.SetVelocityX(0);
+			core.Movement.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -34,9 +32,16 @@ namespace MPlayer.PlayerStates.SubStates
 		{
 			base.LogicUpdate();
 
-			if (xInput != 0f && !isExitingState)
+			if (!isExitingState)
 			{
-				stateMachine.ChangeState(player.MoveState);
+				if (xInput != 0f)
+				{
+					stateMachine.ChangeState(player.MoveState);
+				}
+				else if (yInput < 0)
+				{
+					stateMachine.ChangeState(player.CrounchIdleState);
+				}
 			}
 		}
 

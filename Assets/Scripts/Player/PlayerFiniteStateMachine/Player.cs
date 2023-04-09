@@ -1,12 +1,13 @@
-using MPlayer.Data;
-using MPlayer.PlayerStates.OtherStates;
-using MPlayer.PlayerStates.SubStates;
+using SA.MEntity;
+using SA.MPlayer.Data;
+using SA.MPlayer.PlayerStates.OtherStates;
+using SA.MPlayer.PlayerStates.SubStates;
 using MyInput.Player;
 using System.Net;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-namespace MPlayer.StateMachine
+namespace SA.MPlayer.StateMachine
 {
 	public class Player : MonoBehaviour
 	{
@@ -26,34 +27,28 @@ namespace MPlayer.StateMachine
 		public PlayerWallClimbState WallClimbState { get; private set; }
 		public PlayerWallJumpState WallJumpState { get; private set; }
 		public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+		public PlayerDashState DashState { get; private set; }
+		public PlayerCrouchIdleState CrounchIdleState { get; private set; }
+		public PlayerCrouchMoveState CrounchMoveState { get; private set; }
+		public PlayerAttackState PrimaryAttackState { get; private set; }
+		public PlayerAttackState SecondaryAttackState { get; private set; }
 
 		#endregion
 
-		#region Components Variable
-
+		#region Components
+		public Core Core { get; private set; }
 		public Rigidbody2D RB { get; private set; }
 		public Animator Anim { get; private set; }
 		public GameObject AliveGO { get; private set; }
 		public AnimationToStatemachine ATSM { get; private set; }
-
 		public PlayerInputHandler InputHandler { get; private set; }
-
-		#endregion
-
-		#region Transforms Variable
-
-		[SerializeField]
-		private Transform groundCheck;
-		[SerializeField]
-		private Transform wallCheck;
-		[SerializeField]
-		private Transform ledgeCheck;
+		public Transform DashDirectionIndicator { get; private set; }
+		public BoxCollider2D MovementCollider { get; private set; }
+		public PlayerInventory Inventory { get; private set; }
 
 		#endregion
 
 		#region Other Variable
-		public Vector2 CurrentVelocity { get; private set; }
-		public int FacingDirention { get; private set; }
 
 		private Vector2 workSpace;
 
@@ -62,6 +57,8 @@ namespace MPlayer.StateMachine
 		#region Unity Callback
 		private void Awake()
 		{
+			Core = GetComponentInChildren<Core>();
+
 			stateMachine = new PlayerStateMachine();
 
 			IdleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
@@ -74,6 +71,11 @@ namespace MPlayer.StateMachine
 			WallClimbState = new PlayerWallClimbState(this, stateMachine, playerData, "wallClimb");
 			WallJumpState = new PlayerWallJumpState(this, stateMachine, playerData, "inAir");
 			LedgeClimbState = new PlayerLedgeClimbState(this, stateMachine, playerData, "ledgeClimbState");
+			DashState = new PlayerDashState(this, stateMachine, playerData, "inAir");
+			CrounchIdleState = new PlayerCrouchIdleState(this, stateMachine, playerData, "crouchIdle");
+			CrounchMoveState = new PlayerCrouchMoveState(this, stateMachine, playerData, "crouchMove");
+			PrimaryAttackState = new PlayerAttackState(this, stateMachine, playerData, "attack");
+			SecondaryAttackState = new PlayerAttackState(this, stateMachine, playerData, "attack");
 		}
 
 		private void Start()
@@ -81,15 +83,21 @@ namespace MPlayer.StateMachine
 			Anim = GetComponent<Animator>();
 			RB = GetComponent<Rigidbody2D>();
 			InputHandler = GetComponent<PlayerInputHandler>();
+			DashDirectionIndicator = transform.Find("DashDirectionIndicator");
+			MovementCollider = GetComponent<BoxCollider2D>();
+			Inventory = GetComponent<PlayerInventory>();
 
-			FacingDirention = 1;
+			//FacingDirention = 1;
+
+			PrimaryAttackState.SetWeapon(Inventory.weapons[0]);
+			//SecondaryAttackState.SetWeapon(Inventory.weapons[0]);
 
 			stateMachine.Initialize(IdleState);
 		}
 
 		private void Update()
 		{
-			CurrentVelocity = RB.velocity;
+			Core.LogicUpdate();
 			stateMachine.CurrentState.LogicUpdate();
 		}
 
@@ -100,78 +108,24 @@ namespace MPlayer.StateMachine
 
 		#endregion
 
-		#region Set Func
 
-		public void SetVelocityZero()
-		{
-			RB.velocity = Vector2.zero;
-			CurrentVelocity = Vector2.zero;
-		}
 
-		public void SetVelocity(float velocity, Vector2 angle, int direction)
-		{
-			angle.Normalize();
-			workSpace.Set(angle.x * velocity * direction, angle.y * velocity);
-			RB.velocity = workSpace;
-			CurrentVelocity = workSpace;
-		}
 
-		public void SetVelocityX(float velocity)
-		{
-			workSpace.Set(velocity, CurrentVelocity.y);
-			RB.velocity = workSpace;
-			CurrentVelocity = workSpace;
-		}
-
-		public void SetVelocityY(float velocity)
-		{
-			workSpace.Set(CurrentVelocity.x, velocity);
-			RB.velocity = workSpace;
-			CurrentVelocity = workSpace;
-		}
-
-		#endregion
-
-		#region Check Func
-		/// <summary>
-		/// 检查是否应该翻转
-		/// </summary>
-		public void CheckIfShoudlFlip(float xInput)
-		{
-			if (FacingDirention != xInput && xInput != 0)
-			{
-				Flip();
-			}
-		}
-
-		public bool CheckIfGrounded()
-		{
-			return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-		}
-
-		public bool CheckIfTouchingWall()
-		{
-			return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirention, playerData.wallCheckDistance, playerData.whatIsGround);
-		}
-
-		public bool CheckIfTouchingWallBack()
-		{
-			return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirention, playerData.wallCheckDistance, playerData.whatIsGround);
-		}
-
-		public bool CheckIfTouchingLedge()
-		{
-			return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirention, playerData.wallCheckDistance, playerData.whatIsGround);
-		}
-
-		#endregion
 
 		#region Other Func
-		private void Flip()
+
+		public void SetCollderHeight(float height)
 		{
-			FacingDirention = -FacingDirention;
-			transform.Rotate(0, 180, 0);
+			Vector2 center = MovementCollider.offset;
+			workSpace.Set(MovementCollider.size.x, height);
+
+			center.y += (height - MovementCollider.size.y) / 2;
+
+			MovementCollider.size = workSpace;
+			MovementCollider.offset = center;
 		}
+
+
 
 		/// <summary>
 		/// 调用中介
@@ -186,23 +140,6 @@ namespace MPlayer.StateMachine
 			stateMachine.CurrentState.AnimationFinishTrigger();
 		}
 
-
-		/// <summary>
-		/// 获得墙壁转角的坐标
-		/// </summary>
-		/// <returns></returns>
-		public Vector2 DetermineCornerPosition()
-		{
-			RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirention, playerData.wallCheckDistance, playerData.whatIsGround);
-			float xDis = xHit.distance;
-			workSpace.Set((xDis + 0.015f) * FacingDirention, 0f);
-
-			RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)workSpace, Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
-			float yDis = yHit.distance;
-			workSpace.Set(wallCheck.position.x + (xDis * FacingDirention), ledgeCheck.position.y - yDis);
-
-			return workSpace;
-		}
 
 		#endregion
 	}
