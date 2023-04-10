@@ -44,7 +44,7 @@ namespace SA.Enemy.Specific.Enemy1
 			}
 			else if(!isDetectingLedge)
 			{
-				core.Movement.Flip();
+				Movement?.Flip();
 				stateMachine.ChangeState(enemy.moveState);
 			}
 		}

@@ -1,4 +1,5 @@
 using SA.MEntity;
+using SA.MEntity.CoreComponents;
 using SA.MPlayer.Data;
 using SA.MPlayer.PlayerStates.SuperStates;
 using SA.MPlayer.StateMachine;
@@ -9,6 +10,12 @@ namespace SA.MPlayer.PlayerStates.OtherStates
 {
 	public class PlayerLedgeClimbState : PlayerState
 	{
+		protected Movement Movement { get => movement ?? core.GetCoreComponent<Movement>(ref movement); }
+		protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent<CollisionSenses>(ref collisionSenses); }
+
+		private Movement movement;
+		private CollisionSenses collisionSenses;
+
 		private Vector2 detectedPostion;
 		private Vector2 cornerPosition;
 		private Vector2 startPosition;
@@ -48,12 +55,12 @@ namespace SA.MPlayer.PlayerStates.OtherStates
 		{
 			base.Enter();
 
-			core.Movement.SetVelocityZero();
+			Movement?.SetVelocityZero();
 			player.transform.position = detectedPostion;
 			cornerPosition = DetermineCornerPosition();
 
-			startPosition.Set(cornerPosition.x - (core.Movement.FacingDirection * playerData.startOffset.x), cornerPosition.y - playerData.startOffset.y);
-			stopPosition.Set(cornerPosition.x + (core.Movement.FacingDirection * playerData.stopOffset.x), cornerPosition.y + playerData.stopOffset.y);
+			startPosition.Set(cornerPosition.x - (Movement.FacingDirection * playerData.startOffset.x), cornerPosition.y - playerData.startOffset.y);
+			stopPosition.Set(cornerPosition.x + (Movement.FacingDirection * playerData.stopOffset.x), cornerPosition.y + playerData.stopOffset.y);
 		
 			player.transform.position = startPosition;
 		}
@@ -92,10 +99,10 @@ namespace SA.MPlayer.PlayerStates.OtherStates
 				yInput = player.InputHandler.NormInputY;
 				jumpInput = player.InputHandler.JumpInput;
 
-				core.Movement.SetVelocityZero();
+				Movement?.SetVelocityZero();
 				player.transform.position = startPosition;
 
-				if (xInput == core.Movement.FacingDirection && isHanging && !isClimbing)
+				if (xInput == Movement?.FacingDirection && isHanging && !isClimbing)
 				{
 					CheckForSpace();
 					isClimbing = true;
@@ -120,7 +127,7 @@ namespace SA.MPlayer.PlayerStates.OtherStates
 
 		private void CheckForSpace()
 		{
-			isTouchingCeiling = Physics2D.Raycast(cornerPosition + (Vector2.up * 0.015f) + (Vector2.right * core.Movement.FacingDirection * 0.015f), Vector2.up, playerData.standColliderHeight, core.CollisionSenses.WhatIsGround);
+			isTouchingCeiling = Physics2D.Raycast(cornerPosition + (Vector2.up * 0.015f) + (Vector2.right * Movement.FacingDirection * 0.015f), Vector2.up, playerData.standColliderHeight, CollisionSenses.WhatIsGround);
 			player.Anim.SetBool("isTouchingCeiling", isTouchingCeiling);
 		}
 
@@ -131,13 +138,13 @@ namespace SA.MPlayer.PlayerStates.OtherStates
 		/// <returns></returns>
 		public Vector2 DetermineCornerPosition()
 		{
-			RaycastHit2D xHit = Physics2D.Raycast(core.CollisionSenses.WallCheck.position, Vector2.right * core.Movement.FacingDirection, core.CollisionSenses.WallCheckDistance, core.CollisionSenses.WhatIsGround);
+			RaycastHit2D xHit = Physics2D.Raycast(CollisionSenses.WallCheck.position, Vector2.right * Movement.FacingDirection, CollisionSenses.WallCheckDistance, CollisionSenses.WhatIsGround);
 			float xDis = xHit.distance;
-			workSpace.Set((xDis + 0.015f) * core.Movement.FacingDirection, 0f);
+			workSpace.Set((xDis + 0.015f) * Movement.FacingDirection, 0f);
 
-			RaycastHit2D yHit = Physics2D.Raycast(core.CollisionSenses.LedgeCheckHorizontal.position + (Vector3)workSpace, Vector2.down, core.CollisionSenses.LedgeCheckHorizontal.position.y - core.CollisionSenses.WallCheck.position.y + 0.015f, core.CollisionSenses.WhatIsGround);
+			RaycastHit2D yHit = Physics2D.Raycast(CollisionSenses.LedgeCheckHorizontal.position + (Vector3)workSpace, Vector2.down, CollisionSenses.LedgeCheckHorizontal.position.y - CollisionSenses.WallCheck.position.y + 0.015f, CollisionSenses.WhatIsGround);
 			float yDis = yHit.distance;
-			workSpace.Set(core.CollisionSenses.WallCheck.position.x + (xDis * core.Movement.FacingDirection), core.CollisionSenses.LedgeCheckHorizontal.position.y - yDis);
+			workSpace.Set(CollisionSenses.WallCheck.position.x + (xDis * Movement.FacingDirection), CollisionSenses.LedgeCheckHorizontal.position.y - yDis);
 
 			return workSpace;
 		}

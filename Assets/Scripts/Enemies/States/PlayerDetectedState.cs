@@ -31,7 +31,7 @@ namespace SA.Enemy.States
 			base.Enter();
 
 			performLongRangeAction = false;
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -43,7 +43,7 @@ namespace SA.Enemy.States
 		{
 			base.LogicUpdate();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 
 			if(Time.time >= startTime + stateData.longRangeActionTime)
 			{
@@ -63,7 +63,10 @@ namespace SA.Enemy.States
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 			isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
-			isDetectingLedge = core.CollisionSenses.LedgeVertical;
+			if(CollisionSenses != null)
+			{
+				isDetectingLedge = CollisionSenses.LedgeVertical;
+			}
 		}
 	}
 }

@@ -2,13 +2,13 @@ using SA.MPlayer.Data;
 using SA.Tools;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SA.MEntity.CoreComponents
 {
 	public class CollisionSenses : CoreComponent
 	{
+
 		#region Transforms Variable
 
 		public Transform GroundCheck { get => GenericNotImplementedError<Transform>.TryGet(groundCheck, core.transform.parent.name); set => groundCheck = value; }
@@ -53,17 +53,17 @@ namespace SA.MEntity.CoreComponents
 
 		public bool WallFront
 		{
-			get => Physics2D.Raycast(WallCheck.position, Vector2.right * core.Movement.FacingDirection, WallCheckDistance, WhatIsGround);
+			get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, WallCheckDistance, WhatIsGround);
 		}
 
 		public bool WallBack
-		{
-			get => Physics2D.Raycast(WallCheck.position, Vector2.right * -core.Movement.FacingDirection, WallCheckDistance, WhatIsGround);
+		{	
+			get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, WallCheckDistance, WhatIsGround);
 		}
 
 		public bool LedgeHorizontal
 		{
-			get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * core.Movement.FacingDirection, WallCheckDistance, WhatIsGround);
+			get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, WallCheckDistance, WhatIsGround);
 		}
 
 		public bool LedgeVertical

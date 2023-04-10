@@ -33,7 +33,7 @@ namespace SA.Enemy.States
 
 			entity.atsm.attackState = this;
 			isAnimationFinished = false;
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -44,7 +44,7 @@ namespace SA.Enemy.States
 		public override void LogicUpdate()
 		{
 			base.LogicUpdate();
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 		}
 
 		public override void PhysicsUpdate()

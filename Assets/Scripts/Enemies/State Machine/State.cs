@@ -1,4 +1,5 @@
 using SA.MEntity;
+using SA.MEntity.CoreComponents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,14 @@ namespace SA.Enemy.StateMachine
 {
 	public class State
 	{
+
+		protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+		public CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+
+
+		protected Movement movement;
+		private CollisionSenses collisionSenses;
+
 		public float startTime { get; protected set; }
 
 		protected FiniteStateMachine stateMachine;  //所属状态机

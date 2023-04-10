@@ -29,7 +29,10 @@ namespace SA.Enemy.States
 
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
 			isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
-			isGrounded = core.CollisionSenses.Ground;
+			if (CollisionSenses != null)
+			{
+				isGrounded = CollisionSenses.Ground;
+			}
 		}
 
 		public override void Enter()
@@ -38,7 +41,7 @@ namespace SA.Enemy.States
 
 			isDodgeOver = false;
 
-			core.Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -core.Movement.FacingDirection);
+			Movement?.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -Movement.FacingDirection);
 		}
 
 		public override void Exit()

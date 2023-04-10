@@ -19,8 +19,8 @@ namespace SA.MPlayer.PlayerStates.SubStates
 			base.Enter();
 			player.InputHandler.UseJumpInput();
 			//player.JumpState.ResetAmountOfJumpsLeft();
-			core.Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
-			core.Movement.CheckIfShoudlFlip(wallJumpDirection);
+			Movement?.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
+			Movement?.CheckIfShoudlFlip(wallJumpDirection);
 			//player.JumpState.DecreaseAmountOfJumpsLeft();
 		}
 
@@ -28,8 +28,8 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 			base.LogicUpdate();
 
-			player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
-			player.Anim.SetFloat("xVelocity", Mathf.Abs(core.Movement.CurrentVelocity.x));
+			player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
+			player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
 
 			if (Time.time >= startTime + playerData.wallJumpTime)
 			{
@@ -41,11 +41,11 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 			if (isTouchingWall)
 			{
-				wallJumpDirection = -core.Movement.FacingDirection;
+				wallJumpDirection = -Movement.FacingDirection;
 			}
 			else
 			{
-				wallJumpDirection = core.Movement.FacingDirection;
+				wallJumpDirection = Movement.FacingDirection;
 			}
 		}
 	}

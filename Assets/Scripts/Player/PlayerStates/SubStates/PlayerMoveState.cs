@@ -32,9 +32,9 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 			base.LogicUpdate();
 
-			core.Movement.CheckIfShoudlFlip(xInput);
+			Movement?.CheckIfShoudlFlip(xInput);
 
-			core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
+			Movement?.SetVelocityX(playerData.movementVelocity * xInput);
 
 			if (!isExitingState)
 			{

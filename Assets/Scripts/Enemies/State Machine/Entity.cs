@@ -1,5 +1,6 @@
 using SA.Enemy.Data;
 using SA.MEntity;
+using SA.MEntity.CoreComponents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ namespace SA.Enemy.StateMachine
 	public class Entity : MonoBehaviour
 	{
 		//private int lastDamageDirection;
+		private Movement Movement { get => movement ?? Core.GetCoreComponent(ref movement); }
+		private Movement movement;
+
 
 		public FiniteStateMachine stateMachine;
 
@@ -56,7 +60,7 @@ namespace SA.Enemy.StateMachine
 			stateMachine.currentState.LogicUpdate();
 
 			//MARK:
-			anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
+			anim.SetFloat("yVelocity", Movement.RB.velocity.y);
 
 			if(isStunned && Time.time >= lastDamageTime + entityData.stunRecoveryTime)
 			{
@@ -102,8 +106,8 @@ namespace SA.Enemy.StateMachine
 		/// <param name="velocity"></param>
 		public virtual void DamageHop(float velocity)
 		{
-			velocityWorkspace.Set(Core.Movement.RB.velocity.x, velocity);
-			Core.Movement.RB.velocity = velocityWorkspace;
+			velocityWorkspace.Set(Movement.RB.velocity.x, velocity);
+			Movement.RB.velocity = velocityWorkspace;
 		}
 
 		/// <summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace SA.MEntity.CoreComponents
 {
 	public class Stats : CoreComponent
 	{
+		public event Action OnHealthZero;
+
 		[SerializeField]
 		private float maxHealth;
 		private float currentHealth;
@@ -24,7 +27,7 @@ namespace SA.MEntity.CoreComponents
 			if(currentHealth <= 0) 
 			{
 				currentHealth = 0;
-				Debug.Log("health decreased 0");
+				OnHealthZero?.Invoke();
 			}
 		}
 

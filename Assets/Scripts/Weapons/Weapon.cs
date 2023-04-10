@@ -1,4 +1,5 @@
 using SA.MEntity;
+using SA.MEntity.CoreComponents;
 using SA.MPlayer.PlayerStates.SubStates;
 using SA.SO.WeaponData;
 using System.Collections;
@@ -12,6 +13,10 @@ namespace SA.MWeapon
 	/// </summary>
 	public class Weapon : MonoBehaviour 
 	{
+		protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+		private Movement movement;
+
+
 		[SerializeField] protected SO_WeaponData weaponData;
 
 		protected Animator baseAnimator;

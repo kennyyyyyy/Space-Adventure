@@ -25,7 +25,7 @@ namespace SA.Enemy.States
 		{
 			base.Enter();
 			isChargeTimeOver = false;
-			core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+			Movement?.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
 		}
 
 		public override void Exit()
@@ -37,7 +37,7 @@ namespace SA.Enemy.States
 		{
 			base.LogicUpdate();
 
-			core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+			Movement?.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
 
 			if (Time.time >= startTime + stateData.chargeTime)
 			{
@@ -56,10 +56,13 @@ namespace SA.Enemy.States
 			base.DoChecks();
 
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
-			isDetectingLedge = core.CollisionSenses.LedgeVertical;
-			isDetectingWall = core.CollisionSenses.WallFront;
-
 			performClosetRangeAction = entity.CheckPlayerInCloseRangeAction();
+
+			if (CollisionSenses != null)
+			{
+				isDetectingLedge = CollisionSenses.LedgeVertical;
+				isDetectingWall = CollisionSenses.WallFront;
+			}
 		}
 	}
 }

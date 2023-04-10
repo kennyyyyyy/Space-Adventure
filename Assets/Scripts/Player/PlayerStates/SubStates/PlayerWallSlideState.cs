@@ -20,7 +20,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 
 			if (!isExitingState)
 			{
-				core.Movement.SetVelocityY(-playerData.wallSlideVelocity);
+				Movement?.SetVelocityY(-playerData.wallSlideVelocity);
 
 				if (!isExitingState && grabInput && yInput == 0)
 				{

@@ -3,11 +3,18 @@ using UnityEngine;
 using SA.MPlayer.Data;
 using SA.MPlayer.StateMachine;
 using UnityEngine.EventSystems;
+using SA.MEntity.CoreComponents;
 
 namespace SA.MPlayer.PlayerStates.SuperStates
 {
 	public class PlayerGroundedState : PlayerState
 	{
+		protected Movement Movement { get => movement ?? core.GetCoreComponent<Movement>(ref movement); }
+		protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent<CollisionSenses>(ref collisionSenses); }
+
+		private Movement movement;
+		private CollisionSenses collisionSenses;
+
 		protected int xInput;
 		protected int yInput;
 
@@ -28,9 +35,13 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 		{
 			base.DoChecks();
 
-			isGrounded = core.CollisionSenses.Ground;
-			isTouchingWall = core.CollisionSenses.WallFront;
-			isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
+			if(CollisionSenses != null)
+			{
+				isGrounded = CollisionSenses.Ground;
+				isTouchingWall = CollisionSenses.WallFront;
+				isTouchingLedge = CollisionSenses.LedgeHorizontal;
+				isTouchingCeiling = CollisionSenses.Ceiling;
+			}
 		}
 
 		public override void Enter()

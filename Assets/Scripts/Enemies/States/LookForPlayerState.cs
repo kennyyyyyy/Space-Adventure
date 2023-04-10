@@ -40,7 +40,7 @@ namespace SA.Enemy.States
 			lastTurnTime = startTime;
 			amountOfTurnsDone = 0;
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 		}
 
 		public override void Exit()
@@ -52,12 +52,12 @@ namespace SA.Enemy.States
 		{
 			base.LogicUpdate();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 
 			//立即转向
 			if (turnImmediately)	
 			{
-				core.Movement.Flip();
+				Movement?.Flip();
 				lastTurnTime = Time.time;
 				amountOfTurnsDone++;
 				turnImmediately = false;
@@ -65,7 +65,7 @@ namespace SA.Enemy.States
 			//转向时间到了，且还有转向没完成
 			else if(Time.time >= lastTurnTime + stateData.timeBetweenTurns && !isAllTurnsDone)
 			{
-				core.Movement.Flip();
+				Movement?.Flip();
 				lastTurnTime = Time.time;
 				amountOfTurnsDone++;
 			}

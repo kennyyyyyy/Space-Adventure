@@ -1,3 +1,4 @@
+using SA.MEntity.CoreComponents;
 using SA.MPlayer.Data;
 using SA.MPlayer.StateMachine;
 using UnityEngine;
@@ -6,6 +7,12 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 {
 	public class PlayerAbilityState : PlayerState
 	{
+		protected Movement Movement { get => movement ?? core.GetCoreComponent<Movement>(ref movement); }
+		protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent<CollisionSenses>(ref collisionSenses); }
+
+		private Movement movement;
+		private CollisionSenses collisionSenses;
+
 		protected bool isAbilityDone;
 
 		private bool isGrounded;
@@ -18,7 +25,10 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 		{
 			base.DoChecks();
 
-			isGrounded = core.CollisionSenses.Ground;
+			if (CollisionSenses != null)
+			{
+				isGrounded = CollisionSenses.Ground;
+			}
 		}
 
 		public override void Enter()
@@ -39,7 +49,7 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 
 			if(isAbilityDone)
 			{
-				if(isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
+				if(isGrounded && Movement?.CurrentVelocity.y < 0.01f)
 				{
 					stateMachine.ChangeState(player.IdleState);
 				}

@@ -20,7 +20,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 			base.Enter();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 		}
 
 		public override void Exit()

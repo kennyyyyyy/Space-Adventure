@@ -16,7 +16,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 
 			if(!isExitingState)
 			{
-				core.Movement.SetVelocityY(playerData.wallClimbVelocity);
+				Movement?.SetVelocityY(playerData.wallClimbVelocity);
 
 				if (!isExitingState && yInput <= 0)
 				{

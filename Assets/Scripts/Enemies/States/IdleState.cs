@@ -26,7 +26,7 @@ namespace SA.Enemy.States
 		{
 			base.Enter();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 			isIdleTimeOver = false;
 
 			SetRandomIdleTime();
@@ -38,7 +38,7 @@ namespace SA.Enemy.States
 
 			if(flipAfterIdle)
 			{
-				core.Movement.Flip();
+				Movement?.Flip();
 			}
 		}
 
@@ -46,7 +46,7 @@ namespace SA.Enemy.States
 		{
 			base.LogicUpdate();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 
 			if (Time.time >= startTime + idleTime)
 			{

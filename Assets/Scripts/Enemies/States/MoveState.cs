@@ -22,7 +22,7 @@ namespace SA.Enemy.States
 		public override void Enter()
 		{
 			base.Enter();
-			core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+			Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
 		}
 
 		public override void Exit()
@@ -32,7 +32,7 @@ namespace SA.Enemy.States
 
 		public override void LogicUpdate()
 		{
-			core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+			Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
 			base.LogicUpdate();
 		}
 
@@ -45,8 +45,11 @@ namespace SA.Enemy.States
 		{
 			base.DoChecks();
 
-			isDetectingLedge = core.CollisionSenses.LedgeVertical;
-			isDetectingWall = core.CollisionSenses.WallFront;
+			if (CollisionSenses != null)
+			{
+				isDetectingLedge = CollisionSenses.LedgeVertical;
+				isDetectingWall = CollisionSenses.WallFront;
+			}
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 		}
 	}

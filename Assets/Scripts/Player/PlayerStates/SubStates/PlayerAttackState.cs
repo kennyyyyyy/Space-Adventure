@@ -44,12 +44,12 @@ namespace SA.MPlayer.PlayerStates.SubStates
 
 			if(shouldCheckFlip)
 			{
-				core.Movement.CheckIfShoudlFlip(xInput);
+				Movement?.CheckIfShoudlFlip(xInput);
 			}
 
 			if(setVelocity)
 			{
-				core.Movement.SetVelocityX(velocityToSet * core.Movement.FacingDirection);
+				Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 
 		public void SetPlayerVelocity(float velocity)
 		{
-			core.Movement.SetVelocityX(velocity * core.Movement.FacingDirection);
+			Movement?.SetVelocityX(velocity * Movement.FacingDirection);
 			velocityToSet = velocity;
 			setVelocity = true;
 		}

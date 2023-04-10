@@ -23,7 +23,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 			player.InAirState.StopCoyoteTime();
 
 			player.InputHandler.UseJumpInput();
-			core.Movement.SetVelocityY(playerData.jumpVelocity);
+			Movement?.SetVelocityY(playerData.jumpVelocity);
 			isAbilityDone = true;
 			DecreaseAmountOfJumpsLeft();
 			player.InAirState.SetIsJumping();

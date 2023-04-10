@@ -66,8 +66,7 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 			player.transform.position = holdPosition;
 
-			core.Movement.SetVelocityX(0);
-			core.Movement.SetVelocityY(0);
+			Movement?.SetVelocityZero();
 		}
 
 

@@ -11,13 +11,6 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 		}
 
-		public override void DoChecks()
-		{
-			base.DoChecks();
-
-			isTouchingCeiling = core.CollisionSenses.Ceiling;
-		}
-
 		public override void Enter()
 		{
 			base.Enter();
@@ -38,8 +31,8 @@ namespace SA.MPlayer.PlayerStates.SubStates
 
 			if (!isExitingState)
 			{
-				core.Movement.SetVelocityX(playerData.crouchMovementVelocity * core.Movement.FacingDirection);
-				core.Movement.CheckIfShoudlFlip(xInput);
+				Movement?.SetVelocityX(playerData.crouchMovementVelocity * Movement.FacingDirection);
+				Movement?.CheckIfShoudlFlip(xInput);
 
 				if (xInput == 0)
 				{

@@ -11,18 +11,11 @@ namespace SA.MPlayer.PlayerStates.SubStates
 		{
 		}
 
-		public override void DoChecks()
-		{
-			base.DoChecks();
-
-			isTouchingCeiling = core.CollisionSenses.Ceiling;
-		}
-
 		public override void Enter()
 		{
 			base.Enter();
 
-			core.Movement.SetVelocityX(0);
+			Movement?.SetVelocityX(0);
 			player.SetCollderHeight(playerData.crouchColliderHeight);
 		}
 

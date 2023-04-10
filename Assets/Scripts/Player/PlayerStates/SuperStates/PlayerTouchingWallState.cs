@@ -1,3 +1,4 @@
+using SA.MEntity.CoreComponents;
 using SA.MPlayer.Data;
 using SA.MPlayer.StateMachine;
 using UnityEngine;
@@ -6,6 +7,12 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 {
 	public class PlayerTouchingWallState : PlayerState
 	{
+		protected Movement Movement { get => movement ?? core.GetCoreComponent<Movement>(ref movement); }
+		protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent<CollisionSenses>(ref collisionSenses); }
+
+		private Movement movement;
+		private CollisionSenses collisionSenses;
+
 		protected bool isGrounded;
 		protected bool isTouchingWall;
 		protected bool isTouchingLedge;
@@ -13,7 +20,6 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 		protected bool jumpInput;
 		protected int xInput;
 		protected int yInput;
-
 
 		public PlayerTouchingWallState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
 		{
@@ -33,9 +39,12 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 		{
 			base.DoChecks();
 
-			isGrounded = core.CollisionSenses.Ground;
-			isTouchingWall = core.CollisionSenses.WallFront;
-			isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
+			if(CollisionSenses != null)
+			{
+				isGrounded = CollisionSenses.Ground;
+				isTouchingWall = CollisionSenses.WallFront;
+				isTouchingLedge = CollisionSenses.LedgeHorizontal;
+			}
 
 			if(isTouchingWall && !isTouchingLedge)
 			{
@@ -71,7 +80,7 @@ namespace SA.MPlayer.PlayerStates.SuperStates
 			{
 				stateMachine.ChangeState(player.IdleState);
 			}
-			else if (!isTouchingWall || (xInput != core.Movement.FacingDirection) && !grabInput)
+			else if (!isTouchingWall || (xInput != Movement?.FacingDirection) && !grabInput)
 			{
 				stateMachine.ChangeState(player.InAirState);
 			}

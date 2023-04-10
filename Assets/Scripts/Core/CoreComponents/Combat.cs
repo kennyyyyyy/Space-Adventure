@@ -8,6 +8,9 @@ namespace SA.MEntity.CoreComponents
 	public class Combat : CoreComponent, IDamageable, IKnockbackable
 	{
 		[SerializeField]
+		private GameObject damageParticles;
+
+		[SerializeField]
 		private float maxKnockbackTime = 0.2f;
 		
 		private bool isKnockbackActive;
@@ -21,23 +24,24 @@ namespace SA.MEntity.CoreComponents
 		public void Damage(float damage)
 		{
 			Debug.Log(core.transform.parent.name + " Damaged ；" + damage);
-			core.Stats.DecreaseHealth(damage);
+			Stats?.DecreaseHealth(damage);
+			ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
 		}
 
 		public void Knockback(Vector2 angle, float strength, int direction)
 		{
-			core.Movement.SetVelocity(strength, angle, direction);
-			core.Movement.CanSetVelocity = false;
+			Movement?.SetVelocity(strength, angle, direction);
+			Movement.CanSetVelocity = false;
 			isKnockbackActive = true;
 			knockbackStartTime = Time.time;
 		}
 
 		private void CheckKnockback()
 		{
-			if (isKnockbackActive && ((core.Movement.CurrentVelocity.y <= 0.01f && core.CollisionSenses.Ground)|| Time.time >= knockbackStartTime + maxKnockbackTime ))
+			if (isKnockbackActive && ((Movement?.CurrentVelocity.y <= 0.01f && CollisionSenses.Ground)|| Time.time >= knockbackStartTime + maxKnockbackTime ))
 			{
 				isKnockbackActive = false;
-				core.Movement.CanSetVelocity = true;
+				Movement.CanSetVelocity = true;
 			}
 		}
 	}

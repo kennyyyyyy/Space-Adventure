@@ -25,7 +25,10 @@ namespace SA.Enemy.States
 		{
 			base.DoChecks();
 
-			isGrounded = core.CollisionSenses.Ground;
+			if (CollisionSenses != null)
+			{
+				isGrounded = CollisionSenses.Ground;
+			}
 			performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
 			isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
 		}
@@ -36,7 +39,7 @@ namespace SA.Enemy.States
 
 			isStunTimeOver = false;
 			isMovementStopped = false;
-			core.Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
+			Movement?.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
 
 		}
 
@@ -59,7 +62,7 @@ namespace SA.Enemy.States
 			if (isGrounded && Time.time >= startTime + stateData.stunKnockbackTime && !isMovementStopped)
 			{
 				isMovementStopped = true;
-				core.Movement.SetVelocityX(0f);
+				Movement?.SetVelocityX(0f);
 			}
 		}
 

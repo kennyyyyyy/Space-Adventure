@@ -47,7 +47,7 @@ namespace SA.MWeapon
 
 			foreach (var knockbackable in detectedKnockbackables.ToList())
 			{
-				knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, core.Movement.FacingDirection);
+				knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, Movement.FacingDirection);
 			}
 		}
 
