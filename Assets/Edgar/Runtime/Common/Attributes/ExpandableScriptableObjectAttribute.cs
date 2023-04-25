@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -11,7 +11,7 @@ namespace Edgar.Unity
     /// Use this property on a ScriptableObject type to allow the editors drawing the field to draw an expandable
     /// area that allows for changing the values on the object without having to change editor.
     /// </summary>
-    internal class ExpandableScriptableObjectAttribute : PropertyAttribute
+    public class ExpandableScriptableObjectAttribute : PropertyAttribute
     {
         public bool CanFold { get; set; } = true;
     }
@@ -21,7 +21,7 @@ namespace Edgar.Unity
     /// Draws the property field for any field marked with ExpandableAttribute.
     /// </summary>
     [CustomPropertyDrawer(typeof(ExpandableScriptableObjectAttribute), true)]
-    internal class ExpandableScriptableObjectAttributeDrawer : PropertyDrawer
+	public class ExpandableScriptableObjectAttributeDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {

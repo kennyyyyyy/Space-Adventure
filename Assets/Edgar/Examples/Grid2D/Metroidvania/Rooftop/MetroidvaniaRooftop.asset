@@ -438,8 +438,8 @@ MonoBehaviour:
   - {fileID: 114634744748902306}
   - {fileID: 114502139855042304}
   EditorData:
-    PanOffset: {x: -33.052803, y: 92.46312}
-    Zoom: 0.96527314
+    PanOffset: {x: -148.56696, y: 181.06575}
+    Zoom: 0.7586488
   RoomType: Edgar.Unity.Examples.Metroidvania.MetroidvaniaRoom
   ConnectionType: Edgar.Unity.Examples.Metroidvania.MetroidvaniaConnection
   IsDirected: 0

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b67e8962f73e3489b7aa75f5ab7626, type: 3}
+  m_Name: MyPostProcessing1
+  m_EditorClassIdentifier: 
+  enemy1: {fileID: 3418585844035961448, guid: a2411270c72ad334ebb4006be65b2edb, type: 3}
+  enemy2: {fileID: 1699254591909953805, guid: 8c9c187a3026c1549bf2a2ffb9c48817, type: 3}
+  spawnChance: 0.5
+  spanEnemies: 1

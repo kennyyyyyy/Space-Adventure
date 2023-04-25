@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499a68de40b314441b22cb720c05a770, type: 3}
+  m_Name: CaveInputSetup
+  m_EditorClassIdentifier: 
+  LevelGraph: {fileID: 11400000, guid: 0c2390e0197f86c4288ae5933802b0ca, type: 2}
+  RoomTemplates:
+    DefaultRoomTemplates:
+    - {fileID: 344419429824263421, guid: 256e07c763b27f044abfdd4b6264bf63, type: 3}
+    - {fileID: 8842765483363398278, guid: ba3a4122d4b7f6d41b82c4cd783087b2, type: 3}
+    - {fileID: 344419429824263421, guid: 03ba81f28fb88a04ab9669018e18cdfa, type: 3}
+    - {fileID: 8842765483363398278, guid: acbce7df0e5f0554eb7345484debe9bd, type: 3}
+    - {fileID: 6132469063964213302, guid: b4a07c9a146ed6c46a8824ee2862fe24, type: 3}
+    - {fileID: 3734988074368234523, guid: 63c3d2b634839c8409cd30fc350be470, type: 3}
+    ShopRoomTemplates:
+    - {fileID: 6132469063964213302, guid: 956c91919d40d6f46ae973b00baf68d7, type: 3}
+    TeleportRoomTemplates: []
+    TreasureRoomTemplates:
+    - {fileID: 6132469063964213302, guid: b5cc1e0a32df1b64f9c5ebdb6a454257, type: 3}
+    EntranceRoomTemplates:
+    - {fileID: 8721504626547781281, guid: 63012a43bfa2d9a41bc3fd5a09bd3802, type: 3}
+    ExitRoomTemplates:
+    - {fileID: 3734988074368234523, guid: c454c13700bdeb841afa7551fe2910bf, type: 3}
+    CorridorRoomTemplates:
+    - {fileID: 3734988074368234523, guid: 5abeace26923b424c9ee82d174c32797, type: 3}
+    - {fileID: 3734988074368234523, guid: 186990ba51ec8e048bef14cf5b49b25d, type: 3}
